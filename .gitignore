@@ -1,0 +1,30 @@
+# .NET (api/)
+api/bin/
+api/obj/
+**/bin/
+**/obj/
+*.user
+.vs/
+
+# Angular / Node (web/)
+web/node_modules/
+web/dist/
+web/.angular/
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Docker / entorno
+.env
+docker-compose.override.yml
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Logs
+*.log
