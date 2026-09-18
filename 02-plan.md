@@ -90,18 +90,20 @@ Pantallas: registro de paciente, detalle de paciente con lista de contactos + al
 
 ## 5. Secuencia de trabajo
 
-| Bloque | Tarea                                                      | Tiempo |
-| ------ | ---------------------------------------------------------- | ------ |
-| 1      | docker-compose + scaffolding (`api/`, `web/`, `scripts/`)  | 30 min |
-| 2      | Scripts SQL: Paciente, Gestor, Contacto, ContactoHistorial | 45 min |
-| 3      | API: entidades, DTOs, acceso a datos                       | 40 min |
-| 4      | API: CA-1                                                  | 30 min |
-| 5      | API: CA-2                                                  | 30 min |
-| 6      | API: CA-3 + escritura en historial                         | 45 min |
-| 7      | Pruebas xUnit por CA                                       | 45 min |
-| 8      | Angular: servicios + las 3 pantallas                       | 60 min |
-| 9      | Script de datos de prueba                                  | 20 min |
-| 10     | README, bitácora, probar en limpio con `docker compose up` | 30 min |
+Cada bloque de CA es un commit: endpoint y su prueba xUnit juntos, no en un commit de tests separado al final. Así la matriz de trazabilidad de `03-bitacora.md` apunta a un commit limpio por criterio.
+
+| Bloque | Tarea                                                       | Tiempo |
+| ------ | ------------------------------------------------------------ | ------ |
+| 1      | docker-compose + scaffolding (`api/`, `web/`, `scripts/`)   | 30 min |
+| 2      | Scripts SQL: Paciente, Gestor, Contacto, ContactoHistorial  | 45 min |
+| 3      | API: entidades, DTOs, acceso a datos                        | 40 min |
+| 4      | API: CA-1 + prueba                                          | 40 min |
+| 5      | API: CA-2 + prueba                                          | 40 min |
+| 6      | API: CA-3 + escritura en historial + prueba                 | 55 min |
+| 7      | Consulta con criterio (`GET /pacientes/{id}/contactos`)     | 20 min |
+| 8      | Angular: servicios + las 3 pantallas                         | 60 min |
+| 9      | Script de datos de prueba                                   | 20 min |
+| 10     | README, bitácora, probar en limpio con `docker compose up`  | 30 min |
 
 ## 6. Riesgos
 

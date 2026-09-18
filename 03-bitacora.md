@@ -24,3 +24,4 @@ Uso claude code con Sonnet5 como modelo
     - Apoyo de IA para legibilidad y redacción de hallazgos y plan de desarrollo.
     - Revision de vacios en el plan en base a los hallazgos, y documentacion de supuestos para poder avanzar con el desarrollo. Propuesta de endponints faltantes ej: Get/pacientes para recibir una lista y los detalles de cada contacto, descarte de login y roles de usuario por fuera de alcance, etc.
     - generacion textos de commit y mensajes para documentar el avance del desarrollo.
+    -sugerencia revision de la secuencia de trabajo, aceptada para generar pruebas por cada CA y no al final del desarrollo, para poder tener trazabilidad de cada criterio de aceptación y su prueba unitaria asociada.
