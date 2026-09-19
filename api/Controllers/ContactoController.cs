@@ -41,4 +41,27 @@ public class ContactoController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+
+    [HttpGet("{id}/historial")]
+    public async Task<IActionResult> ObtenerHistorial(Guid id)
+    {
+        try
+        {
+            var historial = await _service.ObtenerHistorialAsync(id);
+            var response = historial.Select(h => new ContactoHistorialDto
+            {
+                CampoModificado = h.CampoModificado,
+                ValorAnterior = h.ValorAnterior,
+                ValorNuevo = h.ValorNuevo,
+                Motivo = h.Motivo,
+                GestorNombre = h.Gestor!.Nombre,
+                FechaCambio = h.FechaCambio
+            }).ToList();
+            return Ok(response);
+        }
+        catch (ContactoNoEncontradoException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
 }

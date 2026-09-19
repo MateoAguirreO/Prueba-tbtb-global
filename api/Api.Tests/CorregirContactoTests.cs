@@ -111,6 +111,37 @@ public class CorregirContactoTests
     }
 
     [Fact]
+    public async Task ObtenerHistorial_DespuesDeCorregir_DevuelveLaFilaDeAuditoria()
+    {
+        using var context = CrearContexto();
+        var (_, gestor, contacto) = await SembrarEscenario(context);
+        var service = new ContactoService(context);
+
+        await service.CorregirAsync(contacto.Id, new CorregirContactoDto
+        {
+            GestorId = gestor.Id,
+            Motivo = "El paciente si contesto",
+            Resultado = ResultadoContacto.Contactado
+        });
+
+        var historial = await service.ObtenerHistorialAsync(contacto.Id);
+
+        var fila = Assert.Single(historial);
+        Assert.Equal("NoContesta", fila.ValorAnterior);
+        Assert.Equal("Contactado", fila.ValorNuevo);
+        Assert.Equal(gestor.Nombre, fila.Gestor!.Nombre);
+    }
+
+    [Fact]
+    public async Task ObtenerHistorial_ConContactoInexistente_LanzaContactoNoEncontradoException()
+    {
+        using var context = CrearContexto();
+        var service = new ContactoService(context);
+
+        await Assert.ThrowsAsync<ContactoNoEncontradoException>(() => service.ObtenerHistorialAsync(Guid.NewGuid()));
+    }
+
+    [Fact]
     public void CA3_CorregirContactoDto_SinCamposACorregir_FallaValidacion()
     {
         var dto = new CorregirContactoDto

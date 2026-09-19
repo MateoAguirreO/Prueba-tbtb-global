@@ -50,3 +50,13 @@ public class CorregirContactoDto : IValidatableObject
         }
     }
 }
+
+public class ContactoHistorialDto
+{
+    public string CampoModificado { get; set; } = string.Empty;
+    public string ValorAnterior { get; set; } = string.Empty;
+    public string ValorNuevo { get; set; } = string.Empty;
+    public string Motivo { get; set; } = string.Empty;
+    public string GestorNombre { get; set; } = string.Empty;
+    public DateTime FechaCambio { get; set; }
+}

@@ -9,6 +9,7 @@ public interface IContactoService
 {
     Task<Contacto> CrearAsync(Guid pacienteId, CrearContactoDto dto);
     Task<Contacto> CorregirAsync(Guid contactoId, CorregirContactoDto dto);
+    Task<List<ContactoHistorial>> ObtenerHistorialAsync(Guid contactoId);
 }
 
 public class ContactoService : IContactoService
@@ -120,5 +121,21 @@ public class ContactoService : IContactoService
         await _context.SaveChangesAsync();
 
         return contacto;
+    }
+
+    public async Task<List<ContactoHistorial>> ObtenerHistorialAsync(Guid contactoId)
+    {
+        var contactoExiste = await _context.Contactos.AnyAsync(c => c.Id == contactoId);
+        if (!contactoExiste)
+        {
+            throw new ContactoNoEncontradoException(contactoId);
+        }
+
+        return await _context.ContactoHistoriales
+            .AsNoTracking()
+            .Include(h => h.Gestor)
+            .Where(h => h.ContactoId == contactoId)
+            .OrderByDescending(h => h.FechaCambio)
+            .ToListAsync();
     }
 }
