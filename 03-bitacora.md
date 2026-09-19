@@ -21,11 +21,15 @@ Uso claude code con Sonnet5 como modelo
 
 ## 3. Registro de decisiones y uso de IA
 
-    - Apoyo de IA para legibilidad y redacción de hallazgos y plan de desarrollo.
-    - Revision de vacios en el plan en base a los hallazgos, y documentacion de supuestos para poder avanzar con el desarrollo. Propuesta de endponints faltantes ej: Get/pacientes para recibir una lista y los detalles de cada contacto, descarte de login y roles de usuario por fuera de alcance, etc.
-    - generacion textos de commit y mensajes para documentar el avance del desarrollo.
-    -sugerencia revision de la secuencia de trabajo, aceptada para generar pruebas por cada CA y no al final del desarrollo, para poder tener trazabilidad de cada criterio de aceptación y su prueba unitaria asociada.
-    - Decisión de la IA, aceptada: un paciente creado por este endpoint  `POST /api/pacientes` siempre nace en estado Activo, porque el teléfono ya es obligatorio ahí; "Incompleto" solo tendría sentido para un autorregistro que no se construye en esta entrega.
-    - Uso de IA para generar pruebas unitarias xUnit para cada endpoint
-    - Pruebas de interfaz con playwright, generadas con ayuda de IA, para validar la experiencia de usuario y la integración de los endpoints con la interfaz web.
-    - Uso de IA para generar la interfaz web en Angular, con formularios reactivos y validaciones, y la integración con los endpoints del backend.
+- Apoyo de IA para legibilidad y redacción de hallazgos y plan de desarrollo.
+- Revision de vacios en el plan en base a los hallazgos, y documentacion de supuestos para poder avanzar con el desarrollo. Propuesta de endponints faltantes ej: Get/pacientes para recibir una lista y los detalles de cada contacto, descarte de login y roles de usuario por fuera de alcance, etc.
+- generacion textos de commit y mensajes para documentar el avance del desarrollo.
+- sugerencia revision de la secuencia de trabajo, aceptada para generar pruebas por cada CA y no al final del desarrollo, para poder tener trazabilidad de cada criterio de aceptación y su prueba unitaria asociada.
+- Decisión de la IA, aceptada: un paciente creado por este endpoint `POST /api/pacientes` siempre nace en estado Activo, porque el teléfono ya es obligatorio ahí; "Incompleto" solo tendría sentido para un autorregistro que no se construye en esta entrega.
+- Uso de IA para generar pruebas unitarias xUnit para cada endpoint.
+- Pruebas de interfaz con playwright, generadas con ayuda de IA, para validar la experiencia de usuario y la integración de los endpoints con la interfaz web.
+- Uso de IA para generar la interfaz web en Angular, con formularios reactivos y validaciones, y la integración con los endpoints del backend.
+- Rechacé la propuesta de la IA de agregar `GET /api/gestores` para poblar un selector en el frontend: con un solo rol y sin login no había nada que seleccionar, no aportaba en ese momento.
+- Corregí el contrato de `POST /api/pacientes` que la IA había redactado con teléfono opcional: contradecía el propio hallazgo 1 (el PRD pide teléfono obligatorio en el registro del gestor), así que lo dejé como campo requerido.
+- Multiples iteraciones sobre UI y UX para mejorar la experiencia de usuario y la cobertura de pruebas, con ayuda de IA para generar código y sugerencias de diseño, las cuales fueron revisadas y adaptadas para cumplir con los requisitos del PRD y las mejores prácticas de desarrollo web.
+- Detección de un hueco en el contrato de interfaz y la lista de "Pantallas" no mencionan GET /api/pacientes ni la pantalla de listado de pacientes, cosa que se debió corregir para cumplir con la navegación y la experiencia de usuario esperada.
