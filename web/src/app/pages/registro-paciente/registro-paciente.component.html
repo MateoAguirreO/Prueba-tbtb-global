@@ -1,0 +1,39 @@
+<h1>Registrar paciente</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <label>
+    Nombre
+    <input type="text" formControlName="nombre" />
+  </label>
+
+  <label>
+    Documento de identidad
+    <input type="text" formControlName="documentoIdentidad" />
+  </label>
+
+  <label>
+    Teléfono
+    <input type="text" formControlName="telefono" />
+  </label>
+
+  <label>
+    Correo (opcional)
+    <input type="email" formControlName="correo" />
+  </label>
+
+  <label>
+    Ciudad
+    <input type="text" formControlName="ciudad" />
+  </label>
+
+  <label>
+    Fecha de inicio de tratamiento
+    <input type="date" formControlName="fechaInicioTratamiento" />
+  </label>
+
+  @if (errorMensaje) {
+    <p class="error">{{ errorMensaje }}</p>
+  }
+
+  <button type="submit" [disabled]="enviando">Registrar</button>
+</form>

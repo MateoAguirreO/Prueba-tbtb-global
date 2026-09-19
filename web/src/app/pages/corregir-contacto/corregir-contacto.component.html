@@ -1,0 +1,75 @@
+<h1>Corregir contacto</h1>
+
+<form [formGroup]="form" (ngSubmit)="corregir()">
+  <label>
+    Gestor que corrige
+    <select formControlName="gestorId">
+      <option value="" disabled>Selecciona un gestor</option>
+      @for (gestor of gestores; track gestor.id) {
+        <option [value]="gestor.id">{{ gestor.nombre }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Motivo de la corrección
+    <textarea formControlName="motivo"></textarea>
+  </label>
+
+  <p>Deja vacío lo que no cambia — solo llena lo que corriges.</p>
+
+  <label>
+    Nueva fecha
+    <input type="date" formControlName="fecha" />
+  </label>
+
+  <label>
+    Nuevo canal
+    <select formControlName="canal">
+      <option value="">(sin cambio)</option>
+      @for (canal of canales; track canal) {
+        <option [value]="canal">{{ canal }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Nuevo resultado
+    <select formControlName="resultado">
+      <option value="">(sin cambio)</option>
+      @for (resultado of resultados; track resultado) {
+        <option [value]="resultado">{{ resultado }}</option>
+      }
+    </select>
+  </label>
+
+  @if (errorMensaje) {
+    <p class="error">{{ errorMensaje }}</p>
+  }
+  @if (guardadoOk) {
+    <p class="ok">
+      Corrección guardada.
+      @if (pacienteId) {
+        <a [routerLink]="['/pacientes', pacienteId]">Volver al paciente</a>
+      }
+    </p>
+  }
+
+  <button type="submit" [disabled]="enviando">Corregir</button>
+</form>
+
+<h2>Historial de correcciones</h2>
+@if (cargandoHistorial) {
+  <p>Cargando...</p>
+} @else if (historial.length === 0) {
+  <p>Este contacto no tiene correcciones todavía.</p>
+} @else {
+  <ul>
+    @for (fila of historial; track fila.fechaCambio + fila.campoModificado) {
+      <li>
+        {{ fila.fechaCambio }} · {{ fila.campoModificado }}: "{{ fila.valorAnterior }}" → "{{ fila.valorNuevo }}"
+        · {{ fila.gestorNombre }} · motivo: {{ fila.motivo }}
+      </li>
+    }
+  </ul>
+}

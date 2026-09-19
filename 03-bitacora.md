@@ -27,3 +27,4 @@ Uso claude code con Sonnet5 como modelo
     -sugerencia revision de la secuencia de trabajo, aceptada para generar pruebas por cada CA y no al final del desarrollo, para poder tener trazabilidad de cada criterio de aceptación y su prueba unitaria asociada.
     - Decisión de la IA, aceptada: un paciente creado por este endpoint  `POST /api/pacientes` siempre nace en estado Activo, porque el teléfono ya es obligatorio ahí; "Incompleto" solo tendría sentido para un autorregistro que no se construye en esta entrega.
     - Uso de IA para generar pruebas unitarias xUnit para cada endpoint
+    - Pruebas de interfaz con playwright, generadas con ayuda de IA, para validar la experiencia de usuario y la integración de los endpoints con la interfaz web.

@@ -1,0 +1,67 @@
+@if (cargando) {
+  <p>Cargando...</p>
+} @else if (errorCarga) {
+  <p class="error">{{ errorCarga }}</p>
+} @else if (paciente) {
+  <h1>{{ paciente.nombre }}</h1>
+  <p>
+    Documento: {{ paciente.documentoIdentidad }} · Teléfono: {{ paciente.telefono || 'sin teléfono' }} ·
+    Ciudad: {{ paciente.ciudad }} · Estado: {{ paciente.estado }}
+  </p>
+
+  <h2>Contactos</h2>
+  @if (paciente.contactos.length === 0) {
+    <p>Todavía no hay contactos registrados.</p>
+  } @else {
+    <ul>
+      @for (contacto of paciente.contactos; track contacto.id) {
+        <li>
+          {{ contacto.fecha }} · {{ contacto.canal }} · {{ contacto.resultado }} · registrado por {{ contacto.gestorNombre }}
+          — <a [routerLink]="['/contactos', contacto.id, 'editar']">corregir</a>
+        </li>
+      }
+    </ul>
+  }
+
+  <h2>Registrar contacto</h2>
+  <form [formGroup]="form" (ngSubmit)="registrarContacto()">
+    <label>
+      Fecha
+      <input type="date" formControlName="fecha" />
+    </label>
+
+    <label>
+      Canal
+      <select formControlName="canal">
+        @for (canal of canales; track canal) {
+          <option [value]="canal">{{ canal }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Resultado
+      <select formControlName="resultado">
+        @for (resultado of resultados; track resultado) {
+          <option [value]="resultado">{{ resultado }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Gestor
+      <select formControlName="gestorId">
+        <option value="" disabled>Selecciona un gestor</option>
+        @for (gestor of gestores; track gestor.id) {
+          <option [value]="gestor.id">{{ gestor.nombre }}</option>
+        }
+      </select>
+    </label>
+
+    @if (errorContacto) {
+      <p class="error">{{ errorContacto }}</p>
+    }
+
+    <button type="submit" [disabled]="enviandoContacto">Registrar contacto</button>
+  </form>
+}
