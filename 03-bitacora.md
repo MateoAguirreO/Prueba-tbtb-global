@@ -15,9 +15,9 @@ Uso claude code con Sonnet5 como modelo
 | 1   | CA-1                   | pendiente                      |                        |                                              |
 | 2   | CA-2                   | pendiente                      |                        |                                              |
 | 3   | CA-3                   | pendiente                      |                        |                                              |
-| 4   | CA-4                   | pendiente                      |                        | fuera de alcance                             |
-| 5   | CA-5                   | pendiente                      |                        | fuera de alcance                             |
-| 6   | CA-6                   | pendiente                      |                        | fuera de alcance                             |
+| 4   | CA-4                   | fuera de alcance               |                        | fuera de alcance                             |
+| 5   | CA-5                   | fuera de alcance               |                        | fuera de alcance                             |
+| 6   | CA-6                   | fuera de alcance               |                        | fuera de alcance                             |
 
 ## 3. Registro de decisiones y uso de IA
 

@@ -1,0 +1,5 @@
+IF DB_ID('TbtbSalud') IS NULL
+BEGIN
+    CREATE DATABASE TbtbSalud;
+END
+GO
