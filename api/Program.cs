@@ -1,15 +1,18 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Api.Data;
 using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IPacienteService, PacienteService>();
+builder.Services.AddScoped<IContactoService, ContactoService>();
 
 var allowedOrigins = builder.Configuration["AllowedOrigins"]?.Split(',') ?? new[] { "http://localhost:4200" };
 builder.Services.AddCors(options =>
