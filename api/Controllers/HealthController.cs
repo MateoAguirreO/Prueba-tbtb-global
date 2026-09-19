@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using Api.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 

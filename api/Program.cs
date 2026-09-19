@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using Api.Data;
 using Api.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
