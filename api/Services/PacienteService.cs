@@ -8,6 +8,7 @@ namespace Api.Services;
 public interface IPacienteService
 {
     Task<Paciente> CrearAsync(CrearPacienteDto dto);
+    Task<Paciente> ObtenerConContactosAsync(Guid pacienteId);
 }
 
 public class PacienteService : IPacienteService
@@ -44,6 +45,27 @@ public class PacienteService : IPacienteService
 
         _context.Pacientes.Add(paciente);
         await _context.SaveChangesAsync();
+
+        return paciente;
+    }
+
+    // Consulta con criterio (02-plan.md § 4): junta Paciente, Contacto y Gestor
+    // para la pantalla de detalle. El orden por Fecha usa IX_Contacto_PacienteId_Fecha.
+    public async Task<Paciente> ObtenerConContactosAsync(Guid pacienteId)
+    {
+        var paciente = await _context.Pacientes
+            // Solo lectura: si el paciente ya estuviera trackeado en este contexto por
+            // otra operación previa en el mismo request, la resolución de identidad de
+            // EF Core podría devolver la colección sin respetar el ORDER BY del SQL.
+            .AsNoTracking()
+            .Include(p => p.Contactos.OrderByDescending(c => c.Fecha))
+                .ThenInclude(c => c.Gestor)
+            .FirstOrDefaultAsync(p => p.Id == pacienteId);
+
+        if (paciente is null)
+        {
+            throw new PacienteNoEncontradoException(pacienteId);
+        }
 
         return paciente;
     }

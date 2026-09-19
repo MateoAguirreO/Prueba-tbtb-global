@@ -39,4 +39,35 @@ public class PacientesController : ControllerBase
             return Conflict(new { message = ex.Message });
         }
     }
+
+    [HttpGet("{id}/contactos")]
+    public async Task<IActionResult> ObtenerConContactos(Guid id)
+    {
+        try
+        {
+            var paciente = await _service.ObtenerConContactosAsync(id);
+            var response = new PacienteConContactosDto
+            {
+                Id = paciente.Id,
+                Nombre = paciente.Nombre,
+                DocumentoIdentidad = paciente.DocumentoIdentidad,
+                Telefono = paciente.Telefono,
+                Ciudad = paciente.Ciudad,
+                Estado = paciente.Estado.ToString(),
+                Contactos = paciente.Contactos.Select(c => new ContactoConGestorDto
+                {
+                    Id = c.Id,
+                    Fecha = c.Fecha,
+                    Canal = c.Canal.ToString(),
+                    Resultado = c.Resultado.ToString(),
+                    GestorNombre = c.Gestor!.Nombre
+                }).ToList()
+            };
+            return Ok(response);
+        }
+        catch (PacienteNoEncontradoException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+    }
 }
