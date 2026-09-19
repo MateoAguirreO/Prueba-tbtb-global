@@ -46,6 +46,9 @@ export class CorregirContactoComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactoId = this.route.snapshot.paramMap.get('id')!;
+    // Llega por query param desde el link "corregir" del detalle de paciente,
+    // así el link de "volver" funciona desde el principio, no solo tras guardar.
+    this.pacienteId = this.route.snapshot.queryParamMap.get('pacienteId');
     this.gestorService.listar().subscribe((gestores) => (this.gestores = gestores));
     this.cargarHistorial();
   }
@@ -66,6 +69,7 @@ export class CorregirContactoComponent implements OnInit {
   corregir(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorMensaje = 'Completa los campos obligatorios (marcados en rojo): gestor y motivo.';
       return;
     }
 

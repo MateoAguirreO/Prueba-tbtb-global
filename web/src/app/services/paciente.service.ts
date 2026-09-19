@@ -13,6 +13,10 @@ export class PacienteService {
     return this.http.post<Paciente>(this.baseUrl, request);
   }
 
+  listar(): Observable<Paciente[]> {
+    return this.http.get<Paciente[]>(this.baseUrl);
+  }
+
   obtenerConContactos(id: string): Observable<PacienteConContactos> {
     return this.http.get<PacienteConContactos>(`${this.baseUrl}/${id}/contactos`);
   }

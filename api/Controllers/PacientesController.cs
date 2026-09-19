@@ -40,6 +40,24 @@ public class PacientesController : ControllerBase
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Listar()
+    {
+        var pacientes = await _service.ListarAsync();
+        var response = pacientes.Select(p => new PacienteDto
+        {
+            Id = p.Id,
+            Nombre = p.Nombre,
+            DocumentoIdentidad = p.DocumentoIdentidad,
+            Telefono = p.Telefono,
+            Correo = p.Correo,
+            Ciudad = p.Ciudad,
+            FechaInicioTratamiento = p.FechaInicioTratamiento,
+            Estado = p.Estado.ToString()
+        }).ToList();
+        return Ok(response);
+    }
+
     [HttpGet("{id}/contactos")]
     public async Task<IActionResult> ObtenerConContactos(Guid id)
     {

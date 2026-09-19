@@ -9,6 +9,7 @@ public interface IPacienteService
 {
     Task<Paciente> CrearAsync(CrearPacienteDto dto);
     Task<Paciente> ObtenerConContactosAsync(Guid pacienteId);
+    Task<List<Paciente>> ListarAsync();
 }
 
 public class PacienteService : IPacienteService
@@ -68,5 +69,15 @@ public class PacienteService : IPacienteService
         }
 
         return paciente;
+    }
+
+    // Listado simple para poder navegar a un paciente sin conocer su id de
+    // antemano. Sin filtros: eso sigue siendo CA-4, sigue fuera de alcance.
+    public async Task<List<Paciente>> ListarAsync()
+    {
+        return await _context.Pacientes
+            .AsNoTracking()
+            .OrderBy(p => p.Nombre)
+            .ToListAsync();
     }
 }

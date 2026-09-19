@@ -1,0 +1,30 @@
+<h1>Pacientes</h1>
+
+@if (cargando) {
+  <p>Cargando...</p>
+} @else if (error) {
+  <p class="error">No se pudo cargar la lista de pacientes.</p>
+} @else if (pacientes.length === 0) {
+  <p>Todavía no hay pacientes registrados. <a routerLink="/pacientes/nuevo">Registra el primero</a>.</p>
+} @else {
+  <table class="tabla-pacientes">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Documento</th>
+        <th>Ciudad</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (paciente of pacientes; track paciente.id) {
+        <tr [routerLink]="['/pacientes', paciente.id]">
+          <td>{{ paciente.nombre }}</td>
+          <td>{{ paciente.documentoIdentidad }}</td>
+          <td>{{ paciente.ciudad }}</td>
+          <td>{{ paciente.estado }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

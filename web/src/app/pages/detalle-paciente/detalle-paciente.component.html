@@ -1,26 +1,46 @@
+<nav class="breadcrumb"><a routerLink="/pacientes">Inicio</a> / Detalle de paciente</nav>
+
 @if (cargando) {
   <p>Cargando...</p>
 } @else if (errorCarga) {
   <p class="error">{{ errorCarga }}</p>
 } @else if (paciente) {
-  <h1>{{ paciente.nombre }}</h1>
-  <p>
-    Documento: {{ paciente.documentoIdentidad }} · Teléfono: {{ paciente.telefono || 'sin teléfono' }} ·
-    Ciudad: {{ paciente.ciudad }} · Estado: {{ paciente.estado }}
-  </p>
+  <a class="volver" routerLink="/pacientes">← Volver a pacientes</a>
+
+  <div class="ficha-paciente">
+    <div class="ficha-header">
+      <h1>{{ paciente.nombre }}</h1>
+      <span class="badge" [class.badge--atencion]="paciente.estado === 'Incompleto'">{{ paciente.estado }}</span>
+    </div>
+    <dl class="ficha-datos">
+      <div><dt>Documento</dt><dd>{{ paciente.documentoIdentidad }}</dd></div>
+      <div><dt>Teléfono</dt><dd>{{ paciente.telefono || 'Sin teléfono' }}</dd></div>
+      <div><dt>Ciudad</dt><dd>{{ paciente.ciudad }}</dd></div>
+    </dl>
+  </div>
 
   <h2>Contactos</h2>
   @if (paciente.contactos.length === 0) {
     <p>Todavía no hay contactos registrados.</p>
   } @else {
-    <ul>
+    <div class="lista-tarjetas">
       @for (contacto of paciente.contactos; track contacto.id) {
-        <li>
-          {{ contacto.fecha }} · {{ contacto.canal }} · {{ contacto.resultado }} · registrado por {{ contacto.gestorNombre }}
-          — <a [routerLink]="['/contactos', contacto.id, 'editar']">corregir</a>
-        </li>
+        <div class="tarjeta-contacto">
+          <div class="tarjeta-contacto-etiquetas">
+            <span class="badge badge--canal">{{ contacto.canal }}</span>
+            <span class="badge" [class.badge--negativo]="contacto.resultado !== 'Contactado'">{{ contacto.resultado }}</span>
+          </div>
+          <div class="tarjeta-contacto-meta">{{ contacto.fecha }} · registrado por {{ contacto.gestorNombre }}</div>
+          <a
+            class="boton-secundario boton-pequeno"
+            [routerLink]="['/contactos', contacto.id, 'editar']"
+            [queryParams]="{ pacienteId: paciente.id }"
+          >
+            Corregir
+          </a>
+        </div>
       }
-    </ul>
+    </div>
   }
 
   <h2>Registrar contacto</h2>
@@ -62,6 +82,6 @@
       <p class="error">{{ errorContacto }}</p>
     }
 
-    <button type="submit" [disabled]="enviandoContacto">Registrar contacto</button>
+    <button type="submit" class="boton-principal" [disabled]="enviandoContacto">Registrar contacto</button>
   </form>
 }

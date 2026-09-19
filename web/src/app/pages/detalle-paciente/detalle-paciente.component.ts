@@ -67,6 +67,7 @@ export class DetallePacienteComponent implements OnInit {
   registrarContacto(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorContacto = 'Completa los campos obligatorios (marcados en rojo).';
       return;
     }
 

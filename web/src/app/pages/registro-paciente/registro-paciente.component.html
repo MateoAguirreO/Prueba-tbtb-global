@@ -1,3 +1,5 @@
+<nav class="breadcrumb"><a routerLink="/pacientes">Inicio</a></nav>
+
 <h1>Registrar paciente</h1>
 
 <form [formGroup]="form" (ngSubmit)="guardar()">
@@ -11,10 +13,33 @@
     <input type="text" formControlName="documentoIdentidad" />
   </label>
 
-  <label>
-    Teléfono
-    <input type="text" formControlName="telefono" />
-  </label>
+  <div class="campo-telefono">
+    <div class="pais-dropdown">
+      <span class="etiqueta">País</span>
+      <button type="button" class="pais-boton" (click)="menuPaisesAbierto = !menuPaisesAbierto">
+        <span class="bandera">{{ paisSeleccionado.bandera }}</span>
+        <span>{{ paisSeleccionado.codigo }}</span>
+        <span class="flecha">▾</span>
+      </button>
+      @if (menuPaisesAbierto) {
+        <ul class="pais-lista">
+          @for (pais of paises; track pais.codigo) {
+            <li>
+              <button type="button" (click)="elegirPais(pais)">
+                <span class="bandera">{{ pais.bandera }}</span>
+                <span>{{ pais.codigo }} {{ pais.nombre }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <label class="campo-numero">
+      Teléfono
+      <input type="tel" formControlName="telefonoLocal" placeholder="3001112233" />
+    </label>
+  </div>
 
   <label>
     Correo (opcional)
@@ -23,7 +48,12 @@
 
   <label>
     Ciudad
-    <input type="text" formControlName="ciudad" />
+    <input type="text" formControlName="ciudad" list="lista-ciudades" placeholder="Escribe para buscar..." />
+    <datalist id="lista-ciudades">
+      @for (ciudad of ciudades; track ciudad) {
+        <option [value]="ciudad"></option>
+      }
+    </datalist>
   </label>
 
   <label>
@@ -35,5 +65,8 @@
     <p class="error">{{ errorMensaje }}</p>
   }
 
-  <button type="submit" [disabled]="enviando">Registrar</button>
+  <div class="acciones">
+    <button type="submit" class="boton-principal" [disabled]="enviando">Registrar</button>
+    <a class="boton-secundario" routerLink="/pacientes">Cancelar</a>
+  </div>
 </form>

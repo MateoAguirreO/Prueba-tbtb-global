@@ -1,7 +1,8 @@
 <header>
   <strong>Programa de acompañamiento a pacientes</strong>
-  <nav>
-    <a routerLink="/pacientes/nuevo">Registrar paciente</a>
+  <nav class="navbar">
+    <a routerLink="/pacientes" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Pacientes</a>
+    <a routerLink="/pacientes/nuevo" routerLinkActive="activo">Registrar paciente</a>
   </nav>
 </header>
 

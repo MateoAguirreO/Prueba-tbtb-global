@@ -1,4 +1,14 @@
+<nav class="breadcrumb">
+  <a routerLink="/pacientes">Inicio</a>
+  @if (pacienteId) {
+    / <a [routerLink]="['/pacientes', pacienteId]">Paciente</a>
+  }
+  / Corregir contacto
+</nav>
+
 <h1>Corregir contacto</h1>
+
+<a class="volver" [routerLink]="pacienteId ? ['/pacientes', pacienteId] : ['/pacientes']">← Volver al paciente</a>
 
 <form [formGroup]="form" (ngSubmit)="corregir()">
   <label>
@@ -47,15 +57,13 @@
     <p class="error">{{ errorMensaje }}</p>
   }
   @if (guardadoOk) {
-    <p class="ok">
-      Corrección guardada.
-      @if (pacienteId) {
-        <a [routerLink]="['/pacientes', pacienteId]">Volver al paciente</a>
-      }
-    </p>
+    <p class="ok">Corrección guardada.</p>
   }
 
-  <button type="submit" [disabled]="enviando">Corregir</button>
+  <div class="acciones">
+    <button type="submit" class="boton-principal" [disabled]="enviando">Corregir</button>
+    <a class="boton-secundario" [routerLink]="pacienteId ? ['/pacientes', pacienteId] : ['/pacientes']">Cancelar</a>
+  </div>
 </form>
 
 <h2>Historial de correcciones</h2>
@@ -64,12 +72,16 @@
 } @else if (historial.length === 0) {
   <p>Este contacto no tiene correcciones todavía.</p>
 } @else {
-  <ul>
+  <div class="lista-tarjetas">
     @for (fila of historial; track fila.fechaCambio + fila.campoModificado) {
-      <li>
-        {{ fila.fechaCambio }} · {{ fila.campoModificado }}: "{{ fila.valorAnterior }}" → "{{ fila.valorNuevo }}"
-        · {{ fila.gestorNombre }} · motivo: {{ fila.motivo }}
-      </li>
+      <div class="tarjeta-historial">
+        <div class="tarjeta-historial-cambio">
+          <span class="badge">{{ fila.campoModificado }}</span>
+          <span class="tarjeta-historial-valores">"{{ fila.valorAnterior }}" → "{{ fila.valorNuevo }}"</span>
+        </div>
+        <div class="tarjeta-contacto-meta">{{ fila.fechaCambio }} · {{ fila.gestorNombre }}</div>
+        <div class="tarjeta-historial-motivo">{{ fila.motivo }}</div>
+      </div>
     }
-  </ul>
+  </div>
 }

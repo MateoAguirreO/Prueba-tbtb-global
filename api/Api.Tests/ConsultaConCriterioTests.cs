@@ -73,4 +73,21 @@ public class ConsultaConCriterioTests
 
         await Assert.ThrowsAsync<PacienteNoEncontradoException>(() => service.ObtenerConContactosAsync(Guid.NewGuid()));
     }
+
+    [Fact]
+    public async Task Listar_DevuelvePacientesOrdenadosPorNombre()
+    {
+        using var context = CrearContexto();
+        context.Pacientes.AddRange(
+            new Paciente { Id = Guid.NewGuid(), Nombre = "Zoe Ramirez", DocumentoIdentidad = "1", Telefono = "1", Ciudad = "Lima", FechaInicioTratamiento = new DateOnly(2026, 6, 1), Estado = EstadoPaciente.Activo, FechaCreacion = DateTime.UtcNow },
+            new Paciente { Id = Guid.NewGuid(), Nombre = "Ana Torres", DocumentoIdentidad = "2", Telefono = "2", Ciudad = "Quito", FechaInicioTratamiento = new DateOnly(2026, 6, 1), Estado = EstadoPaciente.Activo, FechaCreacion = DateTime.UtcNow }
+        );
+        await context.SaveChangesAsync();
+        var service = new PacienteService(context);
+
+        var resultado = await service.ListarAsync();
+
+        Assert.Equal(2, resultado.Count);
+        Assert.Equal("Ana Torres", resultado.First().Nombre);
+    }
 }

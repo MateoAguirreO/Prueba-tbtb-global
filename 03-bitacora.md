@@ -28,3 +28,4 @@ Uso claude code con Sonnet5 como modelo
     - Decisión de la IA, aceptada: un paciente creado por este endpoint  `POST /api/pacientes` siempre nace en estado Activo, porque el teléfono ya es obligatorio ahí; "Incompleto" solo tendría sentido para un autorregistro que no se construye en esta entrega.
     - Uso de IA para generar pruebas unitarias xUnit para cada endpoint
     - Pruebas de interfaz con playwright, generadas con ayuda de IA, para validar la experiencia de usuario y la integración de los endpoints con la interfaz web.
+    - Uso de IA para generar la interfaz web en Angular, con formularios reactivos y validaciones, y la integración con los endpoints del backend.
