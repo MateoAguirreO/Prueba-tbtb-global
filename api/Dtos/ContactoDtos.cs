@@ -27,3 +27,26 @@ public class ContactoDto
     public string Canal { get; set; } = string.Empty;
     public string Resultado { get; set; } = string.Empty;
 }
+
+public class CorregirContactoDto : IValidatableObject
+{
+    [Required]
+    public Guid GestorId { get; set; }
+
+    [Required, MaxLength(300)]
+    public string Motivo { get; set; } = string.Empty;
+
+    public DateOnly? Fecha { get; set; }
+    public CanalContacto? Canal { get; set; }
+    public ResultadoContacto? Resultado { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (Fecha is null && Canal is null && Resultado is null)
+        {
+            yield return new ValidationResult(
+                "Debe indicar al menos un campo a corregir (fecha, canal o resultado).",
+                new[] { nameof(Fecha), nameof(Canal), nameof(Resultado) });
+        }
+    }
+}
